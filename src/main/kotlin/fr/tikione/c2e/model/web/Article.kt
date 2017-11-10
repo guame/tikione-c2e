@@ -4,12 +4,14 @@ import java.util.*
 
 /**
  * Represents an article, a game test, news, etc.
+ * todo: suggestion by game: why not using a data class instead of a class ? see: https://kotlinlang.org/docs/reference/data-classes.html
  */
 class Article {
 
     var title: String? = null
     var subtitle: String? = null
-    var authorAndDate: String? = null
+    var author: String? = null
+    var date: Date? = null
     var category: String? = null
     var headerContent: String? = null
     var contents = ArrayList<Paragraph>()
@@ -50,6 +52,7 @@ class Article {
     }
 
     override fun toString(): String {
-        return "Article(title=$title, subtitle=$subtitle, authorAndDate=$authorAndDate, category=$category, headerContent=$headerContent, contents=$contents, encadreContents=$encadreContents, pictures=$pictures, wrappedArticles=$wrappedArticles, gameScore=$gameScore, gameScoreText=$gameScoreText, gameNature=$gameNature, gameDev=$gameDev, gameEditor=$gameEditor, gamePlatform=$gamePlatform, gameTester=$gameTester, gameConfig=$gameConfig, gameDDL=$gameDDL, gameLang=$gameLang, gameDRM=$gameDRM, gameOpinionTitle=$gameOpinionTitle, gameOpinion=$gameOpinion, gameLinkTitle=$gameLinkTitle, gameLinks=$gameLinks, gameAdviceTitle=$gameAdviceTitle, gameAdvice=$gameAdvice, gamePrice=$gamePrice, gameStateTitle=$gameStateTitle, gameState=$gameState, type=$type)"
+        return "Article(title=$title, subtitle=$subtitle, author=$author,  category=$category, headerContent=$headerContent, contents=$contents, encadreContents=$encadreContents, pictures=$pictures, wrappedArticles=$wrappedArticles, gameScore=$gameScore, gameScoreText=$gameScoreText, gameNature=$gameNature, gameDev=$gameDev, gameEditor=$gameEditor, gamePlatform=$gamePlatform, gameTester=$gameTester, gameConfig=$gameConfig, gameDDL=$gameDDL, gameLang=$gameLang, gameDRM=$gameDRM, gameOpinionTitle=$gameOpinionTitle, gameOpinion=$gameOpinion, gameLinkTitle=$gameLinkTitle, gameLinks=$gameLinks, gameAdviceTitle=$gameAdviceTitle, gameAdvice=$gameAdvice, gamePrice=$gamePrice, gameStateTitle=$gameStateTitle, gameState=$gameState, type=$type)"
     }
+    
 }

@@ -166,7 +166,14 @@ class HtmlWriterServiceImpl(asset: AssetManager) : AbstractWriter(asset), HtmlWr
     }
 
     private fun writeArticleAuthorCreationdate(w: Writer, article: Article) {
-        w.write(div("article-author-creationdate", article.authorAndDate))
+        w.write(div("article-author-creationDate",
+                "Par $article.author | ${formatArticleDate(article.date)}"
+                )
+        )
+    }
+
+    private fun formatArticleDate(date: Date?): String? {
+        return date.toString()
     }
 
     private fun writeArticleSpecs(w: Writer, article: Article) {

@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory
 import java.io.File
 import java.io.IOException
 import java.nio.charset.StandardCharsets
+import java.util.*
 
 class IndexWriterServiceImpl : IndexWriterService {
 
@@ -58,7 +59,8 @@ class IndexWriterServiceImpl : IndexWriterService {
                             val ge = GameEntry()
                             ge.title = article.title!!
                             ge.magNumber = number
-                            ge.authorAndDate = article.authorAndDate ?: ""
+                            ge.author = article.author ?: ""
+                            ge.date = formatDate(article.date) ?: ""
                             ge.gameConfig = article.gameConfig ?: ""
                             ge.gameDDL = article.gameDDL ?: ""
                             ge.gameDRM = article.gameDRM ?: ""
@@ -78,11 +80,12 @@ class IndexWriterServiceImpl : IndexWriterService {
         val orderedGames = games.sortedWith(compareBy({ it.title }, { it.magNumber }))
 
         val content = StringBuilder()
-        content.append("titre,numero mag,auteur et date,config,telechargement,DRM,developpeur,editeur,langue,plateforme,score,testeur\n")
+        content.append("titre,numero mag,auteur, date,config,telechargement,DRM,developpeur,editeur,langue,plateforme,score,testeur\n")
         orderedGames.forEach { game ->
             content.append(formatCSV(game.title)).append(",")
                     .append(formatCSV(game.magNumber)).append(",")
-                    .append(formatCSV(game.authorAndDate)).append(",")
+                    .append(formatCSV(game.author)).append(",")
+                    .append(formatCSV(game.date)).append(",")
                     .append(formatCSV(game.gameConfig)).append(",")
                     .append(formatCSV(game.gameDDL)).append(",")
                     .append(formatCSV(game.gameDRM)).append(",")
@@ -95,6 +98,10 @@ class IndexWriterServiceImpl : IndexWriterService {
         }
         FileUtils.write(file, content.toString(), StandardCharsets.ISO_8859_1.name())
         log.info("fichier d'index cree : {}", file.absolutePath)
+    }
+
+    private fun formatDate(date: Date?): String? {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     private fun isGame(a: Article): Boolean {

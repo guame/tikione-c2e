@@ -35,6 +35,7 @@ object Main {
                 System.getProperty("os.name"),
                 System.getProperty("file.encoding"))
         try {
+            log.debug("retrieve last released version at: {} ", VERSION_URL)
             val latestVersion = Jsoup.connect(VERSION_URL).get().text().trim()
             if (VERSION != latestVersion) {
                 log.warn("<< une nouvelle version de TikiOne C2E est disponible (" + latestVersion + "), " +

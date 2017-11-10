@@ -45,11 +45,12 @@ configurations {
     jar.archiveName = 'c2e.jar'
 }
 
-task createProperties {
-    def file = new File("$buildDir/resources/main/version.txt")
-    file.delete()
-    file.write(project.version.toString())
-}
+//task createProperties {
+//    def file = new File("$buildDir/resources/main/version.txt")
+//    file.delete()
+//    file.write(project.version.toString())
+//}
+
 task copyLibs(type: Copy) {
     from configurations.runtime
     into "$buildDir/libs/lib"
@@ -75,13 +76,13 @@ jar {
             }
         }
     }
-    dependsOn createProperties
+//    dependsOn createProperties
     dependsOn copyLibs
     dependsOn copyLaunchers
     dependsOn copyDoc
 }
 build {
-    dependsOn createProperties
+//    dependsOn createProperties
 }
 
 dependencies {
@@ -94,6 +95,9 @@ dependencies {
     compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
     compile group: 'org.codehaus.janino', name: 'janino', version: '3.0.7'
     compile group: 'com.github.salomonbrys.kodein', name: 'kodein', version: '4.1.0'
+    testCompile 'junit:junit:4.12'
+    testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
+
 }
 
 compileKotlin {
