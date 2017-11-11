@@ -1,5 +1,6 @@
 package fr.tikione.c2e.model.web
 
+import java.text.SimpleDateFormat
 import java.util.*
 
 /**
@@ -52,7 +53,13 @@ class Article {
     }
 
     override fun toString(): String {
-        return "Article(title=$title, subtitle=$subtitle, author=$author,  category=$category, headerContent=$headerContent, contents=$contents, encadreContents=$encadreContents, pictures=$pictures, wrappedArticles=$wrappedArticles, gameScore=$gameScore, gameScoreText=$gameScoreText, gameNature=$gameNature, gameDev=$gameDev, gameEditor=$gameEditor, gamePlatform=$gamePlatform, gameTester=$gameTester, gameConfig=$gameConfig, gameDDL=$gameDDL, gameLang=$gameLang, gameDRM=$gameDRM, gameOpinionTitle=$gameOpinionTitle, gameOpinion=$gameOpinion, gameLinkTitle=$gameLinkTitle, gameLinks=$gameLinks, gameAdviceTitle=$gameAdviceTitle, gameAdvice=$gameAdvice, gamePrice=$gamePrice, gameStateTitle=$gameStateTitle, gameState=$gameState, type=$type)"
+        return "Article(title=$title, subtitle=$subtitle, author=$author, date=${getFormattedDate()}  category=$category, headerContent=$headerContent, contents=$contents, encadreContents=$encadreContents, pictures=$pictures, wrappedArticles=$wrappedArticles, gameScore=$gameScore, gameScoreText=$gameScoreText, gameNature=$gameNature, gameDev=$gameDev, gameEditor=$gameEditor, gamePlatform=$gamePlatform, gameTester=$gameTester, gameConfig=$gameConfig, gameDDL=$gameDDL, gameLang=$gameLang, gameDRM=$gameDRM, gameOpinionTitle=$gameOpinionTitle, gameOpinion=$gameOpinion, gameLinkTitle=$gameLinkTitle, gameLinks=$gameLinks, gameAdviceTitle=$gameAdviceTitle, gameAdvice=$gameAdvice, gamePrice=$gamePrice, gameStateTitle=$gameStateTitle, gameState=$gameState, type=$type)"
     }
     
+    fun getFormattedDate(): String {
+        if(date == null)
+            return ""
+        
+        return SimpleDateFormat("dd MMMM yyyy", Locale.FRENCH).format(date)
+    }
 }

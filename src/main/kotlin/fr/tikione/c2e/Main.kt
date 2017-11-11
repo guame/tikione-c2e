@@ -20,13 +20,20 @@ object Main {
     private val log: Logger = LoggerFactory.getLogger(this.javaClass)
 
     var DEBUG = false
-    var VERSION = Tools.resourceAsStr("version.txt", AssetManager())
+    lateinit var VERSION: String
     private val VERSION_URL = "https://raw.githubusercontent.com/jonathanlermitage/tikione-c2e/master/uc/latest_version.txt"
     private val PAUSE_BETWEEN_MAG_DL = 30L
 
     @Throws(Exception::class)
     @JvmStatic
     fun main(args: Array<String>) {
+        try {
+            VERSION = Tools.resourceAsStr("version.txt", AssetManager())    
+        }
+        catch (e: Exception) {
+            VERSION = "unknown"
+        }
+        
         log.info("TikiOne C2E version {}, Java {}, {} {} by {}, on {} with {} file encoding", VERSION,
                 System.getProperty("java.version"),
                 System.getProperty("java.vm.name"),

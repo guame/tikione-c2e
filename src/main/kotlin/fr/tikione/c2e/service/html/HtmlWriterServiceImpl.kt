@@ -20,6 +20,7 @@ import java.io.*
 import java.net.URL
 import java.util.*
 import java.util.concurrent.TimeUnit
+import kotlin.collections.ArrayList
 import kotlin.collections.LinkedHashMap
 
 class HtmlWriterServiceImpl(asset: AssetManager) : AbstractWriter(asset), HtmlWriterService {
@@ -166,15 +167,20 @@ class HtmlWriterServiceImpl(asset: AssetManager) : AbstractWriter(asset), HtmlWr
     }
 
     private fun writeArticleAuthorCreationdate(w: Writer, article: Article) {
-        w.write(div("article-author-creationDate",
-                "Par $article.author | ${formatArticleDate(article.date)}"
-                )
-        )
+        val content = ArrayList<String>()
+        
+        if(!article.author.isNullOrBlank()) {
+            content.add("Par ${article.author}")
+        }
+        
+        if(article.date != null) {
+            content.add("${if(content.isEmpty()) "Le " else "le "} ${article.getFormattedDate()}")
+        }
+        
+        w.write(div("article-author-creationdate", content.joinToString(separator = " | ")))
     }
 
-    private fun formatArticleDate(date: Date?): String? {
-        return date.toString()
-    }
+ 
 
     private fun writeArticleSpecs(w: Writer, article: Article) {
         val buff = StringBuilder()
