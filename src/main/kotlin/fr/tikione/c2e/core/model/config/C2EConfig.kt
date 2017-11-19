@@ -5,4 +5,6 @@ package fr.tikione.c2e.core.model.config
  * 16/11/2017 - 22:20
  */
 
-data class CpcScrapperConfigII(val user: User = User())
+data class C2EConfig(
+        val user: User = User()  
+)

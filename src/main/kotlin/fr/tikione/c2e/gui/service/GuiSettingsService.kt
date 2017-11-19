@@ -1,13 +1,12 @@
 package fr.tikione.c2e.gui.service
 
-import fr.tikione.c2e.core.model.config.CpcScrapperConfig
-import fr.tikione.c2e.gui.CpcScrapperGui
+import com.thoughtworks.xstream.XStream
+import fr.tikione.c2e.core.model.config.C2EConfig
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import java.io.File
-
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.JAXBContext
-import javax.xml.bind.JAXBElement
-import javax.xml.namespace.QName
+import java.io.FileReader
+import java.io.FileWriter
 
 
 /**
@@ -18,37 +17,36 @@ import javax.xml.namespace.QName
  * But it is really complicated compared to a simple XML serialization operation and the generated configs pollutes the file system. 
  */
 interface GuiSettingsService {
-    fun save(config: CpcScrapperConfig)
-    fun load(): CpcScrapperConfig
+    fun save(config: C2EConfig)
+    fun load(): C2EConfig
 }
 
 class GuiSettingsServiceImpl : GuiSettingsService {
-    val configFile = File(System.getProperty("user.home"), ".cpcscrapper.jaxb.xml")
-    public val configFileII = File(System.getProperty("user.home"), ".cpcscrapper.xstream.xml")
-    
-    val jaxbContext = JAXBContext.newInstance(CpcScrapperConfig::class.java)
-    val marshaller = jaxbContext.createMarshaller()
-    val unmarshaller = jaxbContext.createUnmarshaller()
-    val name = QName(null, "cpcScrapperConfig")
+    private val log: Logger = LoggerFactory.getLogger(this.javaClass)
+    //default home dir for the c2e dir. How to change ?
+    val configDir = File(System.getProperty("user.home"), "c2e")
+    val configFile = File(configDir, "c2e.conf.xml")
+    val xstream = XStream()
     
     init {
-        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true)
-        if(!configFile.parentFile.exists())
-            configFile.parentFile.mkdirs()
+        configDir.mkdirs()
     }
     
-    override fun save(config: CpcScrapperConfig) {
-        val jaxbElement = JAXBElement<CpcScrapperConfig>(name, CpcScrapperConfig::class.java, config)
-        marshaller.marshal(jaxbElement, configFile)
+    override fun save(config: C2EConfig) {
+        xstream.toXML(config, FileWriter(configFile))
     }
 
-    override fun load(): CpcScrapperConfig {
-        try {
-            return unmarshaller.unmarshal(configFile) as CpcScrapperConfig
-        } catch (e: Exception) {
-            e.printStackTrace()
-            return CpcScrapperConfig()
+    override fun load(): C2EConfig {
+        if(configFile.exists()) {
+            try {
+                return xstream.fromXML(FileReader(configFile)) as C2EConfig
+            } catch (e: Exception) {
+                log.error("Impossible de lire la configuration dans: {}", configFile.path, e)
+                return C2EConfig()
+            }
         }
+        else 
+            return C2EConfig()         
     }
     
 }
