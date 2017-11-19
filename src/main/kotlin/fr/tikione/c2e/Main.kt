@@ -25,7 +25,10 @@ object Main {
                 System.getProperty("java.vm.vendor"),
                 System.getProperty("os.name"),
                 System.getProperty("file.encoding"))
-        startCLI(args) // TODO start GUI by default, add a parameter to use CLI
+        if(args.isEmpty())
+            startGUI(args)
+        else
+            startCLI(args) // TODO start GUI by default, add a parameter to use CLI
     }
 
     @Throws(IOException::class, InterruptedException::class)
