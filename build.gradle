@@ -97,6 +97,10 @@ dependencies {
     compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
     compile group: 'org.codehaus.janino', name: 'janino', version: '3.0.7'
     compile group: 'com.github.salomonbrys.kodein', name: 'kodein', version: '4.1.0'
+    
+    //pour les préférences    
+    compile group: 'com.thoughtworks.xstream', name: 'xstream', version: '1.4.10'
+
     testCompile 'junit:junit:4.12'
     testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
 

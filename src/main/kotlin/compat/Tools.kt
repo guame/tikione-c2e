@@ -36,7 +36,12 @@ class Tools {
         @Throws(IOException::class)
         @JvmStatic
         fun resourceAsStr(path: String, asset: AssetManager): String {
-            return IOUtils.toString(Tools::class.java.classLoader.getResourceAsStream(path), StandardCharsets.UTF_8)
+            val resourceAsStream = Tools::class.java.classLoader.getResourceAsStream(path)
+            
+            if(resourceAsStream == null) 
+                return "unknown"
+            
+            return IOUtils.toString(resourceAsStream, StandardCharsets.UTF_8)
         }
 
         /**
